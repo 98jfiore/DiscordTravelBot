@@ -5,12 +5,12 @@ BASE = declarative_base()
 
 class Traveler(BASE):
     __tablename__ = "traveler"
-    user = Column(String(64), primary_key=True)
+    userId = Column(String(50), primary_key=True)
     miles = Column(Integer)
     
-    def __init__(self, user):
-        self.user = user
+    def __init__(self, userId):
+        self.userId = str(userId
         self.miles = 0
         
     def __repr__(self):
-        return "USER %s HAS %i MILES" % (self.user, self.miles)
+        return "USER %s HAS %i MILES" % (self.userId, self.miles)
