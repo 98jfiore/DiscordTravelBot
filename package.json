@@ -1,0 +1,25 @@
+{
+  "name": "travelbot",
+  "version": "1.0.0",
+  "description": "A discord bot that simulates travel",
+  "main": "bot.py","engines": {
+    "python": "3.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/98jfiore/DiscordTravelBot.git"
+  },
+  "keywords": [
+    "heroku",
+    "discord.js"
+  ],
+  "author": "98jfiore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/98jfiore/DiscordTravelBot/issues"
+  },
+  "homepage": "https://github.com/98jfiore/DiscordTravelBot#readme"
+}
