@@ -9,7 +9,7 @@ class Traveler(BASE):
     miles = Column(Integer)
     
     def __init__(self, userId):
-        self.userId = str(userId
+        self.userId = userId
         self.miles = 0
         
     def __repr__(self):
