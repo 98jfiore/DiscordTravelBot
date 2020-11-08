@@ -50,6 +50,6 @@ If you wish to deploy to heroku, log into heroku on your command line and run th
 ## Set up
 
 Go to the Discord Developers portal and create a bot.  Give it persmissions to read and write messages.  Get the bot's token and save it under a file names `.env` with the variable name `DISCORD_TOKEN`.
-Use api from `https://restcountries.eu/`
+Use api from `https://restcountries.eu/` and get flags from `https://www.countryflags.io/`
 
 ## License

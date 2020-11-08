@@ -21,10 +21,12 @@ class Country(BASE):
     __tablename__ = "country"
     ccode = Column(String(3), primary_key=True)
     name = Column(String(50))
+    flag = Column(String(50))
     
-    def __init__(self, ccode, name):
+    def __init__(self, ccode, name, flag):
         self.ccode = ccode
         self.name = name
+        self.flag = flag
         
     def __repr__(self):
         return "COUNTRY %s IS %s" % (self.ccode, self.name)
