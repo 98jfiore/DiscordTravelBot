@@ -4,7 +4,30 @@
         <link rel="stylesheet" href={{ url_for("static", filename="style.css") }} >
     </head>
     <body>
-        <h1>ADD BOT TO YOUR DISCORD</h1>
-        <h2><a href="https://discord.com/api/oauth2/authorize?client_id=774662346030710825&permissions=3072&scope=bot">invite</a></h2>
+        <h1>TravelBot</h1>
+        <div class="description-body">
+            <h2>What is it?</h2>
+            <p>
+                This Bot is a chatbot for a discord server.  It acts as a game where you can 
+                travel around the world country by country.  Earn miles by participating in servers
+                with TravelBot and talk to TravelBot to get info about where you are or take a flight 
+                to the next country over.
+            </p>
+            <h2>What was used?</h2>
+            <p>
+                This app was developed in python with the discord.py library used to interface with discord 
+                servers.  The API <a href="https://restcountries.eu/">https://restcountries.eu/</a> was used 
+                to get country information.  PostgreSQL was used to store information.  The app was also 
+                launched on Heroku and posted on GitHub.
+            </p>
+            <h2>How to get the Bot?</h2>
+            <p>
+                If you own a Discord server, simply click on the link below, log in to Discord, and select 
+                the server you wish to add the bot to.
+            </p>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=774662346030710825&permissions=3072&scope=bot">
+                Invite
+            </a>
+        </div>
     </body>
 </html>

@@ -1,5 +1,17 @@
 body{
-    font-size: 28pt;
-    background-color: Lightpink;
+    background-color:#FAFFFF;
+}
+
+h1 {
+    font-size: 60pt;
+    margin: 30px;
     text-align: center;
+}
+
+.description-body {
+    text-align: left;
+    width: 80%;
+    display: inline-block;
+    margin-left: 10%;
+    font-size: 15pt;
 }
