@@ -158,6 +158,11 @@ def process_text(message, passport):
                 return travel(message, passport)
             elif(message.content.startswith("!jump")):
                 return jump(message, passport)
+            elif(message.content.startswith("!clear passport")):
+                SESSION.execute('DELETE FROM stamp WHERE uid=\''+passport.uid+'\';')
+                SESSION.execute('DELETE FROM traveler WHERE uid=\''+passport.uid+'\';')
+                return "Your passport has been cleared, hope you enjoy starting over!"
+                
     except Exception as err:
         print(str(err))
 
@@ -182,12 +187,13 @@ async def on_message(message):
             return;
         except Exception:
             return
-    passport.miles += 1
-    SESSION.commit()
 
     response = process_text(message, passport)
     if response and response != "":
         await message.channel.send(response)
+    else:
+        passport.miles += 1
+        SESSION.commit()
 
 # resp = requests.get(COUNTRIES_API_URL + "alpha?codes=USA")
 # print(resp)
