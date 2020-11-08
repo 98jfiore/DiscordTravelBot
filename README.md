@@ -2,6 +2,8 @@
 
 TravelBot is a discord bot that simulates going on a grand, world travelling adventure.
 
+Join at: `https://discord.com/api/oauth2/authorize?client_id=774662346030710825&permissions=3072&scope=bot`
+
 ## Installation
 
 The git cli should be installed for this project.
