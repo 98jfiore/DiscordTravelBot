@@ -119,7 +119,7 @@ def process_text(message, passport):
                 return [("If you would like to find where you've been stamped, type `!stamps`.\n" + \
                     "If you wish to know how many stamps you have, type `!stamp count`.\n" + \
                     "If you wish to spend 10 miles to travel, type `!travel` and the three letter code of the country you wish to travel to.\n" + \
-                    "If you wish to spend 50 miles to take a long travel, type `!travel` and the name of the country you wish to travel to.\n" + \
+                    "If you wish to spend 50 miles to take a long travel, type `!jump` and the name of the country you wish to travel to.\n" + \
                     "If you wish to know the name of the country you are currently in, type `!location`.\n" + \
                     "If you wish to know how many miles you have, type `!miles`.\n" + \
                     "If you wish to clear your miles and stamps type `!clear passport`.\n" + \
