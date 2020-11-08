@@ -36,7 +36,14 @@ Finally, you need to enable SQLAlchemy to be read from and written to:
     3. `sudo service postgresql restart`  
     4. Using the username/password you just created, put 
         DATABASE_URL = 'postgresql://{username}:{password}@localhost/postgres' in .env
-        
+
+If you wish to deploy to heroku, log into heroku on your command line and run the 
+  following commands to move your database over:
+    0. If you do not already have a heroku project: `heroku create` and add your config variables.
+    1. `heroku addons:create heroku-postgresql:hobby-dev`
+    2. `heroku pg:wait`
+    3. `heroku pg:push postgres DATABASE_URL`
+    4. `git push heroku main`
 ## Set up
 
 Go to the Discord Developers portal and create a bot.  Give it persmissions to read and write messages.  Get the bot's token and save it under a file names `.env` with the variable name `DISCORD_TOKEN`.
