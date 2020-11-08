@@ -72,9 +72,9 @@ def travel(message, passport):
         return ["I'm sorry, but the country you have entered is not valid, please try again with a country code bordering the country you currently are in."]
     else:
         add_country(next_ccode)
-        stamp_exists = SESSION.query(tables.Stamp).filter_by(code=next_ccode, uid=str(message.author.id)).first()
+        stamp_exists = SESSION.query(tables.Stamp).filter_by(code=next_ccode, uid=str(message.author)).first()
         if not stamp_exists:
-            SESSION.add(tables.Stamp(str(message.author.id), next_ccode))
+            SESSION.add(tables.Stamp(str(message.author), next_ccode))
             SESSION.commit()
             SESSION.commit()
         passport.location = next_ccode
@@ -101,9 +101,9 @@ def jump(message, passport):
     next_ccode = resp.json()[0]['alpha3Code']
     next_country_name = resp.json()[0]['name']
     add_country(next_ccode)
-    stamp_exists = SESSION.query(tables.Stamp).filter_by(code=next_ccode, uid=str(message.author.id)).first()
+    stamp_exists = SESSION.query(tables.Stamp).filter_by(code=next_ccode, uid=str(message.author)).first()
     if not stamp_exists:
-        SESSION.add(tables.Stamp(str(message.author.id), next_ccode))
+        SESSION.add(tables.Stamp(str(message.author), next_ccode))
         SESSION.commit()
         SESSION.commit()
     passport.location = next_ccode
@@ -175,13 +175,13 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot:
         return
-    passport = SESSION.query(tables.Traveler).filter_by(uid=str(message.author.id)).first()
+    passport = SESSION.query(tables.Traveler).filter_by(uid=str(message.author)).first()
     if not passport:
         try:
             add_country("USA")
-            SESSION.add(tables.Traveler(str(message.author.id), "USA"))
+            SESSION.add(tables.Traveler(str(message.author), "USA"))
             SESSION.commit()
-            SESSION.add(tables.Stamp(str(message.author.id), "USA"))
+            SESSION.add(tables.Stamp(str(message.author), "USA"))
             SESSION.commit()
             await message.channel.send("Hello " + message.author.nick + \
                 ", I hope you enjoy your trip on Air Discord! If you were just asking for something, please ask again as I may have missed it.  If you have further inquiries, please type `!bot` and I'll be right with you :)")
