@@ -82,6 +82,34 @@ def travel(message, passport):
         country = SESSION.query(tables.Country).filter_by(ccode=passport.location).first().name
         return "You have successfully traveled to " + country + " please let us know when you would like to travel again"
 
+def jump(message, passport):
+    if passport.miles < 50:
+        return ("We are sorry, but I'm afraid you do not have enough miles to take a long flight at the time, "+\
+            "please keep talking and try again after you've earned enough.  "+\
+            "We thank you for your cooperation.  Enjoy your wait for Discord Airlines! :)")
+    words = message.content.split()
+    if len(words) < 2:
+        return ("We are sorry, but we cannot allow you to travel if you have not told us where you would like to travel to, "+\
+            "please try to travel again and hopefully it will go better! :)")
+    next_country = message.content[6:]
+    next_country.replace(" ", "-")
+    resp = requests.get(COUNTRIES_API_URL + "name/" + next_country)
+    if resp.status_code != 200 or len(resp.json()) < 1:
+        return ("I am sorry, but the country you are requesting does not appear to exist.  "+\
+            "Can you please try again?  I would be more than happy to assist you! :)")
+    next_ccode = resp.json()[0]['alpha3Code']
+    next_country_name = resp.json()[0]['name']
+    add_country(next_ccode)
+    stamp_exists = SESSION.query(tables.Stamp).filter_by(code=next_ccode, uid=str(message.author.id)).first()
+    if not stamp_exists:
+        SESSION.add(tables.Stamp(str(message.author.id), next_ccode))
+        SESSION.commit()
+        SESSION.commit()
+    passport.location = next_ccode
+    passport.miles -= 50
+    SESSION.commit()
+    return "You have successfully taken a long flight to " + next_country_name + " please let us know when you would like to travel again, and get some rest, jet lag can be a doozy!"
+
 
 def process_text(message, passport):
     try:
@@ -90,8 +118,10 @@ def process_text(message, passport):
                 return ("If you would like to find where you've been stamped, type `!stamps`.\n" + \
                     "If you wish to know how many stamps you have, type `!stamp count`.\n" + \
                     "If you wish to spend 10 miles to travel, type `!travel` and the three letter code of the country you wish to travel to.\n" + \
+                    "If you wish to spend 50 miles to take a long travel, type `!travel` and the name of the country you wish to travel to.\n" + \
                     "If you wish to know the name of the country you are currently in, type `!location`.\n" + \
                     "If you wish to know how many miles you have, type `!miles`.\n" + \
+                    "If you wish to clear your miles and stamps type `!clear passport`.\n" + \
                     "Finally, if you wish to know the codes of the countries you can travel to, type `!borders`.")
             elif(message.content.startswith("!stamps")):
                 stamps = SESSION.execute('SELECT name FROM country WHERE ccode IN (SELECT code FROM stamp WHERE uid=\''+passport.uid+'\');')
@@ -126,6 +156,8 @@ def process_text(message, passport):
                 return response[:-2]
             elif(message.content.startswith("!travel")):
                 return travel(message, passport)
+            elif(message.content.startswith("!jump")):
+                return jump(message, passport)
     except Exception as err:
         print(str(err))
 
