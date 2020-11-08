@@ -186,7 +186,9 @@ async def on_message(message):
             await message.channel.send("Hello " + message.author.nick + \
                 ", I hope you enjoy your trip on Air Discord! If you were just asking for something, please ask again as I may have missed it.  If you have further inquiries, please type `!bot` and I'll be right with you :)")
             return;
-        except Exception:
+        except Exception as err:
+            print(err)
+            print(message)
             return
 
     response = process_text(message, passport)
