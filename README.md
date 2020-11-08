@@ -40,5 +40,6 @@ Finally, you need to enable SQLAlchemy to be read from and written to:
 ## Set up
 
 Go to the Discord Developers portal and create a bot.  Give it persmissions to read and write messages.  Get the bot's token and save it under a file names `.env` with the variable name `DISCORD_TOKEN`.
+Use api from `https://restcountries.eu/`
 
 ## License
