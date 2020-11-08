@@ -46,6 +46,7 @@ If you wish to deploy to heroku, log into heroku on your command line and run th
     2. `heroku pg:wait`
     3. `heroku pg:push postgres DATABASE_URL`
     4. `git push heroku main`
+    5. May also have to run `heroku ps:scale worker=1 web=1`
 ## Set up
 
 Go to the Discord Developers portal and create a bot.  Give it persmissions to read and write messages.  Get the bot's token and save it under a file names `.env` with the variable name `DISCORD_TOKEN`.

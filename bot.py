@@ -88,6 +88,7 @@ def process_text(message, passport):
         if(message.content[0] == '!'):
             if(message.content.startswith("!bot")):
                 return ("If you would like to find where you've been stamped, type `!stamps`.\n" + \
+                    "If you wish to know how many stamps you have, type `!stamp count`.\n" + \
                     "If you wish to spend 10 miles to travel, type `!travel` and the three letter code of the country you wish to travel to.\n" + \
                     "If you wish to know the name of the country you are currently in, type `!location`.\n" + \
                     "If you wish to know how many miles you have, type `!miles`.\n" + \
@@ -99,6 +100,17 @@ def process_text(message, passport):
                     for key, value in row.items():
                         response += value + ", "
                 return response[:-2]
+            elif(message.content.startswith("!stamp count")):
+                stamps = SESSION.execute('SELECT name FROM country WHERE ccode IN (SELECT code FROM stamp WHERE uid=\''+passport.uid+'\');')
+                response = message.author.nick + " has a total of "
+                count = 0
+                for row in stamps:
+                    count += 1
+                if count == 1:
+                    response += "1 stamp."
+                else:
+                    response += str(count) + " stamps."
+                return response
             elif(message.content.startswith("!miles")):
                 response = message.author.nick + " has " + str(passport.miles) + " miles and counting!"
                 return response
@@ -115,11 +127,11 @@ def process_text(message, passport):
             elif(message.content.startswith("!travel")):
                 return travel(message, passport)
     except Exception as err:
-        return str(err)
+        print(str(err))
 
 @CLIENT.event
 async def on_ready():
-    print(f'{CLIENT.user} hasconnected to Discord!')
+    print(f'{CLIENT.user} has connected to Discord!')
 
 @CLIENT.event
 async def on_message(message):
