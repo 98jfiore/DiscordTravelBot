@@ -84,35 +84,38 @@ def travel(message, passport):
 
 
 def process_text(message, passport):
-    if(message.content[0] == '!'):
-        if(message.content.startswith("!bot")):
-            return ("If you would like to find where you've been stamped, type `!stamps`.\n" + \
-                "If you wish to spend 10 miles to travel, type `!travel` and the three letter code of the country you wish to travel to.\n" + \
-                "If you wish to know the name of the country you are currently in, type `!location`.\n" + \
-                "If you wish to know how many miles you have, type `!miles`.\n" + \
-                "Finally, if you wish to know the codes of the countries you can travel to, type `!borders`.")
-        elif(message.content.startswith("!stamps")):
-            stamps = SESSION.execute('SELECT name FROM country WHERE ccode IN (SELECT code FROM stamp WHERE uid=\''+passport.uid+'\');')
-            response =message.author.nick + " has stamps from: "
-            for row in stamps:
-                for key, value in row.items():
-                    response += value + ", "
-            return response[:-2]
-        elif(message.content.startswith("!miles")):
-            response = message.author.nick + " has " + str(passport.miles) + " miles and counting!"
-            return response
-        elif(message.content.startswith("!location")):
-            country = SESSION.query(tables.Country).filter_by(ccode=passport.location).first().name
-            response = message.author.nick + " is in the country of " + country
-            return response
-        elif(message.content.startswith("!borders")):
-            borders = SESSION.query(tables.Border).filter_by(ccodea=passport.location).all()
-            response = message.author.nick + " is close to the countries: "
-            for border in borders:
-                response += border.ccodeb + ", "
-            return response[:-2]
-        elif(message.content.startswith("!travel")):
-            return travel(message, passport)
+    try:
+        if(message.content[0] == '!'):
+            if(message.content.startswith("!bot")):
+                return ("If you would like to find where you've been stamped, type `!stamps`.\n" + \
+                    "If you wish to spend 10 miles to travel, type `!travel` and the three letter code of the country you wish to travel to.\n" + \
+                    "If you wish to know the name of the country you are currently in, type `!location`.\n" + \
+                    "If you wish to know how many miles you have, type `!miles`.\n" + \
+                    "Finally, if you wish to know the codes of the countries you can travel to, type `!borders`.")
+            elif(message.content.startswith("!stamps")):
+                stamps = SESSION.execute('SELECT name FROM country WHERE ccode IN (SELECT code FROM stamp WHERE uid=\''+passport.uid+'\');')
+                response =message.author.nick + " has stamps from: "
+                for row in stamps:
+                    for key, value in row.items():
+                        response += value + ", "
+                return response[:-2]
+            elif(message.content.startswith("!miles")):
+                response = message.author.nick + " has " + str(passport.miles) + " miles and counting!"
+                return response
+            elif(message.content.startswith("!location")):
+                country = SESSION.query(tables.Country).filter_by(ccode=passport.location).first().name
+                response = message.author.nick + " is in the country of " + country
+                return response
+            elif(message.content.startswith("!borders")):
+                borders = SESSION.query(tables.Border).filter_by(ccodea=passport.location).all()
+                response = message.author.nick + " is close to the countries: "
+                for border in borders:
+                    response += border.ccodeb + ", "
+                return response[:-2]
+            elif(message.content.startswith("!travel")):
+                return travel(message, passport)
+    except Exception as err:
+        return str(err)
 
 @CLIENT.event
 async def on_ready():
